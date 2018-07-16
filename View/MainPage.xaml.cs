@@ -600,7 +600,7 @@ namespace RenJiCaoZuo
                     {
                         temp.MonkInfo = MonkTemp.info;
                     }
-                    if (MonkTemp.url != null)
+                    if (MonkTemp.url != null && MonkTemp.url.Length > 0)
                     {
                         temp.MonkInfoImage = MonkTemp.url;
                     }
@@ -690,7 +690,8 @@ namespace RenJiCaoZuo
                 pWebData.m_pTempInfoData != null &&
                 pWebData.m_pTempInfoData.body != null &&
                 pWebData.m_pTempInfoData.body.data != null &&
-                pWebData.m_pTempInfoData.body.data.url != null )
+                pWebData.m_pTempInfoData.body.data.url != null &&
+                pWebData.m_pTempInfoData.body.data.url.Length > 0)
             {
                 Uri ImageFilePathUri = new Uri(pWebData.m_pTempInfoData.body.data.url);
                 TempInfo_Image.Source = new BitmapImage(ImageFilePathUri);

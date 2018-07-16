@@ -192,7 +192,7 @@
             </Button.Background>
 
         </Button>
-        <MediaElement x:Name="MediaPlay" LoadedBehavior="Play" UnloadedBehavior ="Manual"   MediaEnded="player_MediaEnded" HorizontalAlignment="Left" Height="523" Margin="62,104,0,0" VerticalAlignment="Top" Width="1168" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+        <MediaElement x:Name="MediaPlay" LoadedBehavior="Play" UnloadedBehavior ="Manual"   MediaEnded="player_MediaEnded" HorizontalAlignment="Center" Height="523" Margin="50,117,62,0" VerticalAlignment="Top" Width="1168" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
 
     </Grid>
 </Page>

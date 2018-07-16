@@ -57,63 +57,140 @@ namespace RenJiCaoZuo.WebData
 
         public string NoHTML(string Htmlstring)  //替换HTML标记
         {
-            //删除脚本
-            Htmlstring = Regex.Replace(Htmlstring, @"<span[^>]*?>.*?</span>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
-            //删除HTML
-            Htmlstring = Regex.Replace(Htmlstring, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"-->", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"<!--.*", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(nbsp|#160);", " ", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(iexcl|#161);", "\xa1", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(cent|#162);", "\xa2", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&#(\d+);", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(middot|#183);", "·", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(deg|#176);", "°", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(macr|#175);", "ˉ", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&ldquo;", "\"", RegexOptions.IgnoreCase);//保留【 “ 】的标点符合
-            Htmlstring = Regex.Replace(Htmlstring, @"&rdquo;", "\"", RegexOptions.IgnoreCase);//保留【 ” 】的标点符合
-            Htmlstring = Regex.Replace(Htmlstring, "&#[^>]*;", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?marquee[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?object[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?param[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?embed[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?table[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?tr[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?th[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "<p[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</p[^>]*>", "\n\r", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?a[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?tbody[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?li[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?span[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?div[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?th[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?td[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?script[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "(javascript|jscript|vbscript|vbs):", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "on(mouse|exit|error|click|key)", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "<\\?xml[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "<\\/?[a-z]+:[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?font[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?b[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?u[^>]*>", "", RegexOptions.IgnoreCase);
-            //Htmlstring = Regex.Replace(Htmlstring, "</?i[^>]*>", "", RegexOptions.IgnoreCase);
-//            Htmlstring = Regex.Replace(Htmlstring, "</?i[^>]*>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, "</?strong[^>]*>", "", RegexOptions.IgnoreCase);
+            try
+            {
+                //删除脚本
+                Htmlstring = Regex.Replace(Htmlstring, @"<span[^>]*?>.*?</span>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
+                //删除HTML
+                Htmlstring = Regex.Replace(Htmlstring, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"-->", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"<!--.*", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(nbsp|#160);", " ", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(iexcl|#161);", "\xa1", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(cent|#162);", "\xa2", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&#(\d+);", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(middot|#183);", "·", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(deg|#176);", "°", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(macr|#175);", "ˉ", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&ldquo;", "\"", RegexOptions.IgnoreCase);//保留【 “ 】的标点符合
+                Htmlstring = Regex.Replace(Htmlstring, @"&rdquo;", "\"", RegexOptions.IgnoreCase);//保留【 ” 】的标点符合
+                Htmlstring = Regex.Replace(Htmlstring, "&#[^>]*;", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?marquee[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?object[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?param[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?embed[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?table[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?tr[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?th[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "<p[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</p[^>]*>", "\n\r", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?a[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?tbody[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?li[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?span[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?div[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?th[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?td[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?script[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "(javascript|jscript|vbscript|vbs):", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "on(mouse|exit|error|click|key)", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "<\\?xml[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "<\\/?[a-z]+:[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?font[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?b[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?u[^>]*>", "", RegexOptions.IgnoreCase);
+                //Htmlstring = Regex.Replace(Htmlstring, "</?i[^>]*>", "", RegexOptions.IgnoreCase);
+                //            Htmlstring = Regex.Replace(Htmlstring, "</?i[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?strong[^>]*>", "", RegexOptions.IgnoreCase);
 
-            Htmlstring.Replace("<", "");
-            Htmlstring.Replace(">", "");
-            Htmlstring.Replace("\r\n", "");
-            //Htmlstring = HttpContext.Current.Server.HtmlEncode(Htmlstring).Trim();
+                Htmlstring.Replace("<", "");
+                Htmlstring.Replace(">", "");
+                Htmlstring.Replace("\r\n", "");
+                //Htmlstring = HttpContext.Current.Server.HtmlEncode(Htmlstring).Trim();
+                
+            }
+            catch (Exception ex)
+            {
+               
+            }
             return Htmlstring;
+        }
+
+        public void NoHTMLBig(string Htmlstring, out string HtmlConvert)  //替换HTML标记
+        {
+            try
+            {
+                //删除脚本
+                Htmlstring = Regex.Replace(Htmlstring, @"<span[^>]*?>.*?</span>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
+                //删除HTML
+                Htmlstring = Regex.Replace(Htmlstring, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"-->", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"<!--.*", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(nbsp|#160);", " ", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(iexcl|#161);", "\xa1", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(cent|#162);", "\xa2", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&#(\d+);", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(middot|#183);", "·", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(deg|#176);", "°", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&(macr|#175);", "ˉ", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, @"&ldquo;", "\"", RegexOptions.IgnoreCase);//保留【 “ 】的标点符合
+                Htmlstring = Regex.Replace(Htmlstring, @"&rdquo;", "\"", RegexOptions.IgnoreCase);//保留【 ” 】的标点符合
+                Htmlstring = Regex.Replace(Htmlstring, "&#[^>]*;", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?marquee[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?object[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?param[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?embed[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?table[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?tr[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?th[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "<p[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</p[^>]*>", "\n\r", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?a[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?tbody[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?li[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?span[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?div[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?th[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?td[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?script[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "(javascript|jscript|vbscript|vbs):", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "on(mouse|exit|error|click|key)", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "<\\?xml[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "<\\/?[a-z]+:[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?font[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?b[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?u[^>]*>", "", RegexOptions.IgnoreCase);
+                //Htmlstring = Regex.Replace(Htmlstring, "</?i[^>]*>", "", RegexOptions.IgnoreCase);
+                //            Htmlstring = Regex.Replace(Htmlstring, "</?i[^>]*>", "", RegexOptions.IgnoreCase);
+                Htmlstring = Regex.Replace(Htmlstring, "</?strong[^>]*>", "", RegexOptions.IgnoreCase);
+
+                Htmlstring.Replace("<", "");
+                Htmlstring.Replace(">", "");
+                Htmlstring.Replace("\r\n", "");
+                //Htmlstring = HttpContext.Current.Server.HtmlEncode(Htmlstring).Trim();
+                HtmlConvert = Htmlstring;
+            }
+            catch (Exception ex)
+            {
+                HtmlConvert = "";
+            }
+           
         }
 
         //获取前半部分link的字符串长度
@@ -129,6 +206,10 @@ namespace RenJiCaoZuo.WebData
         //获取全部link的字符串长度
         public string getFullpathPicLink(string URLfromDatastruct)
         {
+            if ((URLfromDatastruct.Length - 2) <= 0)
+            {
+                return "";
+            }
             string str3 = URLfromDatastruct.Substring(2, (URLfromDatastruct.Length - 2));
             return getLinkByPic() + str3;
         }
@@ -153,10 +234,14 @@ namespace RenJiCaoZuo.WebData
 
                     if (m_pTempInfoData.body.data.detail != null)
                     {
-                        m_pTempInfoData.body.data.detail = NoHTML(m_pTempInfoData.body.data.detail);
+
+                        string strTemp;
+                        NoHTMLBig(m_pTempInfoData.body.data.detail, out strTemp);
+                        m_pTempInfoData.body.data.detail = null;
+                        m_pTempInfoData.body.data.detail = strTemp;
                     }
 
-                    if (m_pTempInfoData.body.data.url != null)
+                    if (m_pTempInfoData.body.data.url != null && m_pTempInfoData.body.data.url.Length > 0)
                     {
                         m_pTempInfoData.body.data.url = getFullpathPicLink(m_pTempInfoData.body.data.url);
                     }
@@ -180,7 +265,7 @@ namespace RenJiCaoZuo.WebData
 
                 foreach (MonkInfoDatabody temp in m_pMonkInfoData.body.data)
                 {
-                    if (temp.url != null)
+                    if (temp.url != null && temp.url.Length > 0)
                     {
                         temp.url = getFullpathPicLink(temp.url);
                     }
@@ -240,7 +325,9 @@ namespace RenJiCaoZuo.WebData
             if (ssString.Length > 0)
             {
                 m_pqRCodeInfoData = JsonConvert.DeserializeObject<qRCodeInfo>(ssString);
-                if (m_pqRCodeInfoData.body.data != null && m_pqRCodeInfoData.body.data.url != null)
+                if (m_pqRCodeInfoData.body.data != null 
+                    && m_pqRCodeInfoData.body.data.url != null
+                    && m_pqRCodeInfoData.body.data.url.Length > 0)
                 {
                     m_pqRCodeInfoData.body.data.url = getFullpathPicLink(m_pqRCodeInfoData.body.data.url);
                 }

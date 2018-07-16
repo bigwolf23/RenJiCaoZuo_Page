@@ -48,33 +48,40 @@ namespace RenJiCaoZuo
 
         private void setTextControl(string sText)
         {
-            TextBlock sTextBlock1 = new TextBlock();
-            // RichTextBox 
-            sTextBlock1.Text = sText;
-            sTextBlock1.HorizontalAlignment = HorizontalAlignment.Left;
-            sTextBlock1.TextWrapping = TextWrapping.Wrap;
-            sTextBlock1.VerticalAlignment = VerticalAlignment.Top;
-            //sTextBlock1.Margin =  "32,10,0,0";
-            //sTextBlock1.FontWeight = 18;
-            int nFontCollum = 59;
-            sTextBlock1.FontSize = 18;
-            sTextBlock1.LineHeight = 27;
-            sTextBlock1.Width = nFontCollum * sTextBlock1.FontSize;
+            try
+            {
+                TextBlock sTextBlock1 = new TextBlock();
+                // RichTextBox 
+                sTextBlock1.Text = sText;
+                sTextBlock1.HorizontalAlignment = HorizontalAlignment.Left;
+                sTextBlock1.TextWrapping = TextWrapping.Wrap;
+                sTextBlock1.VerticalAlignment = VerticalAlignment.Top;
+                //sTextBlock1.Margin =  "32,10,0,0";
+                //sTextBlock1.FontWeight = 18;
+                int nFontCollum = 59;
+                sTextBlock1.FontSize = 18;
+                sTextBlock1.LineHeight = 27;
+                sTextBlock1.Width = nFontCollum * sTextBlock1.FontSize;
 
-            int nReturn = getReturnNumber(sText);
-            double nHeight = (((sTextBlock1.Text.Length / nFontCollum) + nReturn *2) * sTextBlock1.LineHeight ) ;
-            sTextBlock1.Height = ((nHeight == 0) ? sTextBlock1.LineHeight : nHeight);
+                int nReturn = getReturnNumber(sText);
+                double nHeight = (((sTextBlock1.Text.Length / nFontCollum) + nReturn * 2) * sTextBlock1.LineHeight);
+                sTextBlock1.Height = ((nHeight == 0) ? sTextBlock1.LineHeight : nHeight);
 
-            //sTextBlock1.Width = 300;
-            //sTextBlock1.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
-            //sTextBlock1.FontFamily = new Uri("");
-//             sTextBlock1.Style = 
-//             Style="{DynamicResource FZXKJW}"
-//             sTextBlock1.Style = 
-            //sTextBlock1.TextOptions.TextHintingMode = TextHintingMode.Fixed;
-            
-            //sTextBlock1.Padding = "0,0,0,3";
-            this.addControl.Children.Add(sTextBlock1);
+                //sTextBlock1.Width = 300;
+                //sTextBlock1.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                //sTextBlock1.FontFamily = new Uri("");
+                //             sTextBlock1.Style = 
+                //             Style="{DynamicResource FZXKJW}"
+                //             sTextBlock1.Style = 
+                //sTextBlock1.TextOptions.TextHintingMode = TextHintingMode.Fixed;
+
+                //sTextBlock1.Padding = "0,0,0,3";
+                this.addControl.Children.Add(sTextBlock1);
+            }
+            catch (Exception ex)
+            {
+
+            }
             
         }
         private int getReturnNumberByKey(string sText,string Key)
@@ -82,16 +89,23 @@ namespace RenJiCaoZuo
             int nCount = 0;
             string sTempText = sText;
             string strtempa = Key;
-            while (true)
+            try
             {
-                int IndexofA = sTempText.IndexOf(strtempa);
-
-                if (IndexofA == -1)
+                while (true)
                 {
-                    break;
+                    int IndexofA = sTempText.IndexOf(strtempa);
+
+                    if (IndexofA == -1)
+                    {
+                        break;
+                    }
+                    sTempText = sTempText.Substring(IndexofA + Key.Length, sTempText.Length - IndexofA - Key.Length);
+                    nCount++;
+
                 }
-                sTempText = sTempText.Substring(IndexofA + Key.Length, sTempText.Length - IndexofA - Key.Length);
-                nCount++;
+            }
+            catch (Exception ex)
+            {
 
             }
             return nCount;
@@ -111,6 +125,34 @@ namespace RenJiCaoZuo
             sImage.HorizontalAlignment = HorizontalAlignment.Left;
             this.addControl.Children.Add(sImage);
         }
+
+
+        private string getPicKey(string Wenzi)
+        {
+            string picKey = "";
+            if (Wenzi.Contains("<img src=\"data:image/jpeg;base64,"))
+            {
+                picKey = "<img src=\"data:image/jpeg;base64,";
+            }
+            if (Wenzi.Contains("<img src=\"data:image/png;base64,"))
+            {
+                picKey = "<img src=\"data:image/png;base64,";
+            }
+            if (Wenzi.Contains("<img src=\"data:image/bmp;base64,"))
+            {
+                picKey = "<img src=\"data:image/bmp;base64,";
+            }
+            if (Wenzi.Contains("<img src=\"data:image/jpg;base64,"))
+            {
+                picKey = "<img src=\"data:image/jpg;base64,";
+            }
+
+            if (Wenzi.Contains("<img src=\"data:image/jpg;base64,"))
+            {
+                picKey = "<img src=\"data:image/jpg;base64,";
+            }
+            return picKey;
+        }
         /// <summary>
         /// 定时器回调函数
         /// </summary>
@@ -118,61 +160,74 @@ namespace RenJiCaoZuo
         /// <param name="e"></param>
         private void setAllTempleInfoText(string AllTempInfo)
         {
-            if (AllTempInfo == null)
+            try
             {
-                return;
-            }
-
-            if (AllTempInfo.Length < 0)
-            {
-                return;
-            }
-
-            string Wenzi = AllTempInfo;
-            
-
-            Wenzi = Wenzi.TrimStart((char[])"\n\r".ToCharArray());
-
-            string strtempa = "<img src=\"data:image/jpeg;base64,";
-            string strtempb = ">";
-            int nKeyLength = strtempa.Length;
-            int nFound = 0;
-            while(true)
-            {
-                int IndexofA = Wenzi.IndexOf(strtempa);
-                int IndexofB = Wenzi.IndexOf(strtempb);
-                string ImgString = null;
-                if (IndexofA == -1)
+                if (AllTempInfo == null)
                 {
-                    setTextControl(Wenzi);
-                    break;
+                    return;
                 }
 
-                if (IndexofA != -1 && IndexofB != -1)
+                if (AllTempInfo.Length < 0)
                 {
-                    if (IndexofA > 0)
+                    return;
+                }
+
+                string Wenzi = AllTempInfo;
+                Wenzi = Wenzi.TrimStart((char[])"\n\r".ToCharArray());
+
+                string strtempa = getPicKey(Wenzi);
+                string strtempb = ">";
+                int nKeyLength = strtempa.Length;
+                int nFound = 0;
+                while (true)
+                {
+
+                    int IndexofA = Wenzi.IndexOf(strtempa);
+                    int IndexofB = Wenzi.IndexOf(strtempb);
+                    string ImgString = null;
+
+                    if (IndexofA == 0)
                     {
-                        string WenziFirst = Wenzi.Substring(0, IndexofA);
-                        setTextControl(WenziFirst);
+                        setTextControl(Wenzi);
+                        break;
                     }
 
-                    ImgString = Wenzi.Substring(IndexofA, IndexofB - IndexofA - nKeyLength);
-                    Wenzi = Wenzi.Substring(IndexofB + 1, Wenzi.Length - IndexofB - 1);
+                    if (IndexofA == -1)
+                    {
+                        setTextControl(Wenzi);
+                        break;
+                    }
 
-                    nFound = IndexofB;
-                    seprateImg(ImgString);
+                    if (IndexofA != -1 && IndexofB != -1)
+                    {
+                        if (IndexofA > 0)
+                        {
+                            string WenziFirst = Wenzi.Substring(0, IndexofA);
+                            setTextControl(WenziFirst);
+                        }
+
+                        ImgString = Wenzi.Substring(IndexofA, IndexofB - IndexofA - nKeyLength);
+                        Wenzi = Wenzi.Substring(IndexofB + 1, Wenzi.Length - IndexofB - 1);
+
+                        nFound = IndexofB;
+                        seprateImg(ImgString, strtempa);
+                    }
+                    strtempa = getPicKey(Wenzi);
                 }
             }
-            
+            catch (Exception ex)
+            {
+
+            }
             
            
         }
 
-        private void seprateImg(string ImgString)
+        private void seprateImg(string ImgString,string picKey)
         {
             if (ImgString != null && ImgString.Length > 0)
             {
-                string strtempa = "<img src=\"data:image/jpeg;base64,";
+                string strtempa = picKey;
                 string strtempb = "\" ";
                 //string strtempb = "\" ";
                 int IndexofA = ImgString.IndexOf(strtempa);
@@ -236,7 +291,7 @@ namespace RenJiCaoZuo
             }
             catch (Exception ex)
             {
-                throw ex;
+
             }
             return null;
         }
