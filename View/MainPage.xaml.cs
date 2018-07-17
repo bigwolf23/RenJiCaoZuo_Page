@@ -118,7 +118,17 @@ namespace RenJiCaoZuo
             if (strMode == "3")
             {
                 Media_play_Path = ConfigurationManager.AppSettings["Video_Path"];
+                string Media_play_Mode = ConfigurationManager.AppSettings["Video_Play_Mode"];
                 MediaPlay.Source = new Uri(Media_play_Path);
+                if (Media_play_Mode == "None")
+                {
+                    MediaPlay.Stretch = Stretch.Uniform;
+                }
+                else
+                {
+                    MediaPlay.Stretch = Stretch.Fill;
+                }
+                
             }
             else
             {
